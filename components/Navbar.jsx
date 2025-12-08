@@ -4,14 +4,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
+  let pathname = usePathname();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="text-3xl font-bold text-blue-600">
-            LuxuryEstate
+            {pathname.startsWith("/admin") ? "" : <Image src="/logo.png" alt="LuxuryEstate" width={150} height={150} />}
           </Link>
 
           <nav className="hidden md:flex items-center space-x-10">

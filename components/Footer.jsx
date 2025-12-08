@@ -1,8 +1,13 @@
+"use client"
 import Link from "next/link";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  let pathname = usePathname();
   return (
+    <>
+    {pathname.startsWith("/admin") ? null :
     <footer className="bg-gray-900 text-white py-16">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div>
@@ -37,6 +42,8 @@ export default function Footer() {
       <div className="mt-12 text-center text-gray-500 text-sm">
         © 2025 LuxuryEstate. All rights reserved.
       </div>
-    </footer>
+    </footer>}
+    </>
+
   );
 }
