@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Building2, Users, User, LogOut, Menu, X } from "lucide-react";
+import { Home, Building2, Users, User, LogOut, Menu, X, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
@@ -23,7 +23,7 @@ export default function AdminLayout({ children }) {
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
       {/* Modern Stylish Sidebar - Fixed on Desktop, Sheet on Mobile */}
       <aside className="hidden md:block fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-blue-900 to-gray-900 text-white p-6 flex flex-col shadow-2xl z-50 rounded-r-2xl">
-        <Image src={'/logo.png'} height={150} width={150} className="mb-12" />
+        <Image src={'/logo.png'} height={150} width={150} className="mb-12" alt="logo" />
         <nav className="flex-1 space-y-4">
           {navigation.map((item) => {
             const Icon = item.icon;

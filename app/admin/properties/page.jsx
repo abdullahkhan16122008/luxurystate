@@ -11,11 +11,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { toast } from "sonner";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, X, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { useProperties } from "@/app/context/PropertiesContext";
 import AdminLayout from "@/components/AdminLayout";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import axios from "axios";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const salesData = [
     { month: "Jan", sales: 120 },
@@ -37,7 +38,9 @@ export default function AdminProperties() {
     const [properties, setProperties] = useState([]);
     const [open, setOpen] = useState(false);
     const [editingProperty, setEditingProperty] = useState(null);
-    const [selectedFiles, setSelectedFiles] = useState([])
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const [form, setForm] = useState({
         title: "",
@@ -58,14 +61,14 @@ export default function AdminProperties() {
         lng: ""
     });
     const [filters, setFilters] = useState({
-    search: "",
-    type: "",
-    status: "",
-    propertyStatus: "",
-    minPrice: "",
-    maxPrice: "",
-    bedrooms: ""
-  });
+        search: "",
+        type: "",
+        status: "",
+        propertyStatus: "",
+        minPrice: "",
+        maxPrice: "",
+        bedrooms: ""
+    });
 
     let api = process.env.NEXT_PUBLIC_API_URL;
 
@@ -85,17 +88,17 @@ export default function AdminProperties() {
     }, [])
 
     const filteredProperties = properties.filter((p) => {
-    const matchesSearch = p.title.toLowerCase().includes(filters.search.toLowerCase()) || 
-                          p.location.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesType = !filters.type || p.type === filters.type;
-    const matchesStatus = !filters.status || p.status === filters.status;
-    const matchesPropertyStatus = !filters.propertyStatus || p.propertyStatus === filters.propertyStatus;
-    const matchesMinPrice = !filters.minPrice || p.price >= Number(filters.minPrice);
-    const matchesMaxPrice = !filters.maxPrice || p.price <= Number(filters.maxPrice);
-    const matchesBedrooms = !filters.bedrooms || p.bedrooms >= Number(filters.bedrooms);
+        const matchesSearch = p.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+            p.location.toLowerCase().includes(filters.search.toLowerCase());
+        const matchesType = !filters.type || p.type === filters.type;
+        const matchesStatus = !filters.status || p.status === filters.status;
+        const matchesPropertyStatus = !filters.propertyStatus || p.propertyStatus === filters.propertyStatus;
+        const matchesMinPrice = !filters.minPrice || p.price >= Number(filters.minPrice);
+        const matchesMaxPrice = !filters.maxPrice || p.price <= Number(filters.maxPrice);
+        const matchesBedrooms = !filters.bedrooms || p.bedrooms >= Number(filters.bedrooms);
 
-    return matchesSearch && matchesType && matchesStatus && matchesPropertyStatus && matchesMinPrice && matchesMaxPrice && matchesBedrooms;
-  });
+        return matchesSearch && matchesType && matchesStatus && matchesPropertyStatus && matchesMinPrice && matchesMaxPrice && matchesBedrooms;
+    });
 
     const totalSales = salesData.reduce((acc, curr) => acc + curr.sales, 0);
     const avgPrice = properties?.length !== undefined ? Math.round(properties.reduce((acc, p) => acc + p.price, 0) / properties?.length / 1000000) : 0;
@@ -176,6 +179,10 @@ export default function AdminProperties() {
         setOpen(true);
     };
 
+    const totalSoldValue = properties
+        .filter(p => p.status === "Sold")
+        .reduce((acc, p) => acc + p.price, 0);
+
     return (
         <AdminLayout>
             <div>
@@ -196,7 +203,7 @@ export default function AdminProperties() {
                             <CardTitle className="text-lg">Total Sales Value</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-bold">{totalSales}M AED</div>
+                            <div className="text-3xl font-bold">{(totalSoldValue / 1000000).toFixed(1)}M AEDM AED</div>
                         </CardContent>
                     </Card>
                     <Card>
@@ -569,6 +576,9 @@ export default function AdminProperties() {
                                         {!p?.status || p?.status === "None" ? "-" : ""}
                                     </TableCell>
                                     <TableCell className="flex gap-2">
+                                        <Button size="sm" variant="outline" onClick={() => setSelectedProperty(p)}>
+                                            <Eye className="h-4 w-4" />
+                                        </Button>
                                         <Button size="sm" onClick={() => startEdit(p)}>
                                             <Edit className="h-4 w-4" />
                                         </Button>
@@ -595,6 +605,185 @@ export default function AdminProperties() {
                         </TableBody>
                     </Table>
 
+                    {/* Property Details Modal - 90% Width, No Shadcn Dialog, Fully Custom & Unique Design */}
+                    <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${selectedProperty ? "opacity-100 visible" : "opacity-0 invisible"}`}>
+                        {/* Backdrop */}
+                        <div
+                            className="absolute inset-0 bg-black/70"
+                            onClick={() => setSelectedProperty(null)}
+                        />
+
+                        {/* Modal Container - 90% Width */}
+                        {selectedProperty && (
+                            <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+                                {/* Close Button */}
+                                {/* <button
+                                    onClick={() => setSelectedProperty(null)}
+                                    className="absolute top-6 right-6 z-10 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg"
+                                >
+                                    <X className="h-6 w-6 text-gray-800" />
+                                </button> */}
+
+                                {/* Header - Title + Price Badge */}
+                                <div className="bg-blue-900 text-white p-5 relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                                    <div className="relative z-10">
+                                        <h2 className="text-2xl md:text-3xl font-extrabold mb-4 leading-tight">{selectedProperty.title}</h2>
+                                        <div className="flex items-center gap-6">
+                                            <span className="text-2xl font-bold">
+                                                {(selectedProperty.price / 1000000).toFixed(1)}M AED
+                                            </span>
+                                            <span className="backdrop-blur rounded-full text-xl font-medium">
+                                                {selectedProperty.propertyStatus} {selectedProperty.status !== "None" && `• ${selectedProperty.status}`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Scrollable Body */}
+                                <div className="max-h-[80vh] overflow-y-auto p-8 md:p-12 space-y-10">
+                                    {/* Images Carousel - Custom Stylish */}
+                                    {selectedProperty.images && selectedProperty.images.length > 0 && (
+                                        <div>
+                                            <h3 className="text-2xl font-bold mb-6 text-gray-800">Property Gallery</h3>
+                                            <div className="relative group">
+                                                <div className="overflow-hidden rounded-2xl shadow-xl">
+                                                    <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
+                                                        {selectedProperty.images.map((img, i) => (
+                                                            <div key={i} className="w-full flex-shrink-0">
+                                                                <img
+                                                                    src={img}
+                                                                    alt={`Property ${i + 1}`}
+                                                                    className="w-full h-96 md:h-[500px] object-cover"
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {/* Custom Navigation Arrows */}
+                                                {selectedProperty.images.length > 1 && (
+                                                    <>
+                                                        <button
+                                                            onClick={() => setCurrentImageIndex(prev => prev === 0 ? selectedProperty.images.length - 1 : prev - 1)}
+                                                            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-xl transition-all hover:scale-110"
+                                                        >
+                                                            <ChevronLeft className="h-7 w-7 text-gray-800" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setCurrentImageIndex(prev => (prev + 1) % selectedProperty.images.length)}
+                                                            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-xl transition-all hover:scale-110"
+                                                        >
+                                                            <ChevronRight className="h-7 w-7 text-gray-800" />
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                                {/* Dots Indicator */}
+                                                {selectedProperty.images.length > 1 && (
+                                                    <div className="flex justify-center gap-2 mt-6">
+                                                        {selectedProperty.images.map((_, i) => (
+                                                            <button
+                                                                key={i}
+                                                                onClick={() => setCurrentImageIndex(i)}
+                                                                className={`w-3 h-3 rounded-full transition-all ${currentImageIndex === i ? "bg-blue-600 w-10" : "bg-gray-400"}`}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Key Details Grid */}
+                                    <div>
+                                        <h3 className="text-2xl font-bold mb-6 text-gray-800">Property Details</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Location</p>
+                                                <p className="text-xl font-bold text-gray-800">{selectedProperty.location}</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Type</p>
+                                                <p className="text-xl font-bold text-gray-800">{selectedProperty.type}</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Size</p>
+                                                <p className="text-xl font-bold text-gray-800">{selectedProperty.area} {selectedProperty.unit}</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Bedrooms</p>
+                                                <p className="text-xl font-bold text-gray-800">{selectedProperty.bedrooms} Bedrooms</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Bathrooms</p>
+                                                <p className="text-xl font-bold text-gray-800">{selectedProperty.bathrooms} Bathrooms</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 rounded-2xl shadow-md">
+                                                <p className="text-gray-600 font-medium">Listing Status</p>
+                                                <p className="text-xl font-bold text-gray-800">
+                                                    {selectedProperty.status === "Hot" && "🔥 Hot Offer"}
+                                                    {selectedProperty.status === "Featured" && "⭐ Featured"}
+                                                    {selectedProperty.status === "Sold" && "🏆 Sold"}
+                                                    {selectedProperty.status === "Rented" && "🔒 Rented"}
+                                                    {selectedProperty.status === "None" && "Standard"}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Features */}
+                                    {selectedProperty.features && selectedProperty.features.length > 0 && (
+                                        <div>
+                                            <h3 className="text-2xl font-bold mb-6 text-gray-800">Key Features</h3>
+                                            <div className="flex flex-wrap gap-4">
+                                                {selectedProperty.features.map((feat, i) => (
+                                                    <span key={i} className="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-shadow">
+                                                        {feat}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Description */}
+                                    <div>
+                                        <h3 className="text-2xl font-bold mb-6 text-gray-800">Description</h3>
+                                        <div className="bg-gray-50 p-8 rounded-2xl shadow-inner">
+                                            <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">
+                                                {selectedProperty.description}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Custom Location Card (No Map - Stylish Alternative) */}
+                                    {selectedProperty.lat && selectedProperty.lng && (
+                                        <div>
+                                            <h3 className="text-2xl font-bold mb-6 text-gray-800">Location</h3>
+                                            <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+                                                <div className="absolute inset-0 bg-black/20"></div>
+                                                <div className="relative z-10 text-center">
+                                                    <MapPin className="h-16 w-16 mx-auto mb-4" />
+                                                    <h4 className="text-2xl font-bold mb-2">{selectedProperty.location}</h4>
+                                                    <p className="opacity-90">Prime location in Dubai's most prestigious community</p>
+                                                    <div className="mt-6 flex justify-center gap-8 text-lg">
+                                                        <div>
+                                                            <p className="text-blue-300">Latitude</p>
+                                                            <p className="text-xl font-bold">{selectedProperty.lat}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-blue-300">Longitude</p>
+                                                            <p className="text-xl font-bold">{selectedProperty.lng}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </AdminLayout>

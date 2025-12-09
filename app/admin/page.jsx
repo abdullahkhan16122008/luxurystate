@@ -2,11 +2,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Building2, DollarSign, TrendingUp, Users } from "lucide-react";
+import { Building2, DollarSign, LayoutDashboard, Settings, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 import AdminLayout from "@/components/AdminLayout";
 import { useProperties } from "../context/PropertiesContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const salesData = [
   { month: "Jan", sales: 120000000 },
@@ -35,10 +35,10 @@ export default function AdminDashboard() {
   const avgPrice = properties.length ? Math.round(properties.reduce((acc, p) => acc +p.price, 0) / properties.length) : 0;
 
   const stats = [
-    { title: "Total Sales (2025)", value: `AED ${(totalSales / 1000000).toFixed(1)}M`, icon: DollarSign, href: "/admin" },
-    { title: "Total Properties", value: totalProperties, icon: Building2, href: "/admin/properties" },
-    { title: "Total Leads", value: leads.length, icon: Users, href: "/admin/users" },
-    { title: "Avg Property Price", value: `AED ${ (avgPrice / 1000000).toFixed(1) }M`, icon: TrendingUp, href: "/admin/properties" },
+    { title: "Dashboard", icon: LayoutDashboard, href: "/admin" },
+    { title: "Properties", icon: Building2, href: "/admin/properties" },
+    { title: "Leads", icon: Users, href: "/admin/users" },
+    { title: "Profile", icon: Settings, href: "/admin/profile" },
   ];
 
   return (
@@ -54,11 +54,10 @@ export default function AdminDashboard() {
               <Link href={stat.href} key={i}>
                 <Card className="hover:shadow-xl transition cursor-pointer">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
                     <Icon className="h-5 w-5 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl font-bold">{stat.value}</div>
+                    <div className="text-3xl font-bold">{stat.title}</div>
                   </CardContent>
                 </Card>
               </Link>
@@ -66,24 +65,6 @@ export default function AdminDashboard() {
           })}
         </div>
 
-        {/* Sales Graph */}
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Sales Performance 2025</CardTitle>
-            <CardDescription>Total sales value per month (AED)</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(value) => `AED ${(value / 1000000).toFixed(1)}M`} />
-                <Line type="monotone" dataKey="sales" stroke="#2563eb" strokeWidth={3} />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
       </div>
     </AdminLayout>
   );

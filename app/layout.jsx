@@ -19,7 +19,9 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
         <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
       </head>
-      <body className="min-h-screen flex flex-col bg-white text-gray-900">
+      <body className="min-h-screen flex flex-col bg-white text-gray-900"
+      suppressHydrationWarning
+      >
         <PropertiesProvider>
           <Navbar />
           {/* <MobileMenu /> */}
