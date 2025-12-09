@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Footer() {
   let pathname = usePathname();
@@ -9,14 +10,14 @@ export default function Footer() {
     <>
     {pathname.startsWith("/admin") ? null :
     <footer className="bg-gray-900 text-white py-16">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-10 border-b border-gray-400 pb-8">
         <div>
-          <h3 className="text-3xl font-bold mb-4">LuxuryEstate</h3>
-          <p className="text-gray-400">Your trusted partner for luxury real estate in Dubai & UAE.</p>
+          <Image src={'/logo.png'} width={250} height={250} alt='logo' className="" />
+          <p className="text-gray-400 my-6">Your trusted partner for luxury real estate in Dubai & UAE.</p>
         </div>
-        <div>
+        <div className="">
           <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
-          <ul className="space-y-3 text-gray-400">
+          <ul className="space-y-6 text-gray-400">
             <li><Link href="/" className="hover:text-white transition">Home</Link></li>
             <li><Link href="/properties" className="hover:text-white transition">Properties</Link></li>
             <li><Link href="/about" className="hover:text-white transition">About Us</Link></li>
@@ -25,8 +26,8 @@ export default function Footer() {
         </div>
         <div>
           <h4 className="text-xl font-semibold mb-4">Contact Info</h4>
-          <p className="text-gray-400">+971 4 123 4567</p>
-          <p className="text-gray-400">info@luxuryestate.ae</p>
+          <p className="text-gray-400 my-6">+971 4 123 4567</p>
+          <p className="text-gray-400 my-6">info@luxuryestate.ae</p>
           <p className="text-gray-400">Business Bay, Dubai, UAE</p>
         </div>
         <div>

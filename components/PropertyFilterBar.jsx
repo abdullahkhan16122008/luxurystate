@@ -17,7 +17,7 @@ export default function PropertyFilterBar({ filters, setFilters }) {
     <div className="bg-white rounded-2xl shadow-xl p-6 mb-8 sticky top-24 z-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         <div className="lg:col-span-1">
-          <Label>Location</Label>
+          <Label className='my-2' >Location</Label>
           <Select value={filters.location} onValueChange={(v) => setFilters(prev => ({...prev, location: v}))}>
             <SelectTrigger>
               <SelectValue />
@@ -29,7 +29,7 @@ export default function PropertyFilterBar({ filters, setFilters }) {
         </div>
 
         <div className="lg:col-span-1">
-          <Label>Property Type</Label>
+          <Label className='my-2' >Property Type</Label>
           <Select value={filters.type} onValueChange={(v) => setFilters(prev => ({...prev, type: v}))}>
             <SelectTrigger>
               <SelectValue />
@@ -41,7 +41,7 @@ export default function PropertyFilterBar({ filters, setFilters }) {
         </div>
 
         <div className="lg:col-span-1">
-          <Label>Bedrooms</Label>
+          <Label className='my-2' >Bedrooms</Label>
           <Select value={filters.bedrooms} onValueChange={(v) => setFilters(prev => ({...prev, bedrooms: v}))}>
             <SelectTrigger>
               <SelectValue />
@@ -53,7 +53,7 @@ export default function PropertyFilterBar({ filters, setFilters }) {
         </div>
 
         <div className="lg:col-span-2">
-          <Label>Price Range (AED)</Label>
+          <Label className='my-2' >Price Range (AED)</Label>
           <Slider
             value={[filters.maxPrice / 1000000]}
             onValueChange={([v]) => setFilters(prev => ({...prev, maxPrice: v * 1000000}))}

@@ -46,7 +46,7 @@ export default function ImageGallery({ images }) {
       <div className="overflow-hidden rounded-2xl" ref={mainViewport}>
         <Carousel className="w-full">
           <CarouselContent>
-            {images.map((src, index) => (
+            {images?.map((src, index) => (
               <CarouselItem key={index}>
                 <div className="relative aspect-video lg:aspect-square">
                   <Image
@@ -67,12 +67,14 @@ export default function ImageGallery({ images }) {
       {/* Thumbnails */}
       <div className="overflow-hidden" ref={thumbViewport}>
         <div className="flex gap-3">
-          {images.map((src, index) => (
+          {images?.map((src, index) => (
             <button
               key={index}
-              onClick={() => onThumbClick(index)}
+              onClick={() => {
+                onThumbClick(index)
+              }}
               className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden transition-all ${
-                selectedIndex === index ? "ring-4 ring-blue-600 opacity-100" : "opacity-60"
+                selectedIndex === index ? "scale-[1.05] opacity-100" : "opacity-60"
               }`}
             >
               <Image src={src} alt="" width={96} height={96} className="object-cover w-full h-full" />

@@ -7,6 +7,7 @@ const PropertiesContext = createContext();
 
 export function PropertiesProvider({ children }) {
   const [properties, setProperties] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("luxuryProperties");
@@ -24,7 +25,7 @@ export function PropertiesProvider({ children }) {
   };
 
   return (
-    <PropertiesContext.Provider value={[properties, updateProperties]}>
+    <PropertiesContext.Provider value={[properties, updateProperties, isOpen, setIsOpen]}>
       {children}
     </PropertiesContext.Provider>
   );

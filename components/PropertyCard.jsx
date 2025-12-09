@@ -5,17 +5,24 @@ import Link from "next/link";
 import { Bed, Bath, Ruler, MapPin, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from "react";
 
-export default function PropertyCard({ property }) {
+export default function PropertyCard({ property, index }) {
   const formattedPrice = new Intl.NumberFormat("en-AE", {
     style: "currency",
     currency: "AED",
     maximumFractionDigits: 0,
   }).format(property.price);
 
+  useEffect(() => {
+    AOS.init()
+  }, [])
+
   return (
-    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
-      <div className="relative h-64 md:h-80 overflow-hidden">
+    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3" data-aos='zoom-in' data-aos-delay={`${index * 100}`} >
+      <div className="relative h-64 md:h-90 -translate-y-6 overflow-hidden">
         <Image
           src={property.images[0]}
           alt={property.title}
@@ -29,7 +36,7 @@ export default function PropertyCard({ property }) {
         </div>
       </div>
 
-      <CardContent className="p-6">
+      <CardContent className="p-6 -translate-y-6">
         <h3 className="text-xl font-semibold mb-2 line-clamp-1">{property.title}</h3>
         <p className="text-muted-foreground flex items-center gap-1 mb-4">
           <MapPin className="w-4 h-4" />
@@ -52,7 +59,7 @@ export default function PropertyCard({ property }) {
         </div>
 
         <Button asChild className="w-full group">
-          <Link href={`/property/${property.id}`}>
+          <Link href={`/property/${property._id}`}>
             View Details
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition" />
           </Link>

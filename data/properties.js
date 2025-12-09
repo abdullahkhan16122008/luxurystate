@@ -10,6 +10,8 @@ export const properties = [
     bathrooms: 8,
     area: 12000,
     unit: "sqft",
+    propertyStatus: 'For Sale',
+    status: 'Hot',
     features: ["Private Pool", "Beach Access", "Cinema Room", "Smart Home", "Sea View", "Staff Quarters"],
     description: "Ultra-luxury 6-bedroom beachfront villa with private pool and direct beach access on the iconic Palm Jumeirah.",
     images: [
@@ -30,6 +32,8 @@ export const properties = [
     type: "Penthouse",
     bedrooms: 4,
     bathrooms: 5,
+    propertyStatus: 'For Rent',
+    status: 'Featured',
     area: 5500,
     unit: "sqft",
     features: ["Burj Khalifa View", "Private Terrace", "Concierge", "Gym", "Cinema"],
@@ -53,6 +57,8 @@ export const properties = [
     bathrooms: 6,
     area: 8500,
     unit: "sqft",
+    propertyStatus: 'For Sale',
+    status: '',
     features: ["Private Yacht Berth", "Infinity Pool", "Sky Lounge", "Smart Home"],
     description: "Marina-front masterpiece with private yacht berth and infinity-edge pool.",
     images: [
@@ -74,6 +80,8 @@ export const properties = [
     bathrooms: 10,
     area: 20000,
     unit: "sqft",
+    propertyStatus: 'For Rent',
+    status: 'Hot',
     features: ["Golf Course View", "Private Cinema", "Wine Cellar", "Helipad"],
     description: "The pinnacle of luxury living in Emirates Hills with golf course frontage.",
     images: [
@@ -95,6 +103,8 @@ export const properties = [
     bathrooms: 5,
     area: 5200,
     unit: "sqft",
+    propertyStatus: 'For Sale',
+    status: '',
     features: ["Beach Access", "Private Terrace", "Sea View", "Gym"],
     description: "Modern beachfront penthouse with uninterrupted sea views in JBR.",
     images: [
@@ -115,6 +125,8 @@ export const properties = [
     bathrooms: 6,
     area: 6800,
     unit: "sqft",
+    propertyStatus: 'For Sale',
+    status: '',
     features: ["Golf View", "Private Pool", "Smart Home", "Park Access"],
     description: "Contemporary villa overlooking the golf course in Dubai Hills.",
     images: [
@@ -135,6 +147,8 @@ export const properties = [
     bathrooms: 9,
     area: 14000,
     unit: "sqft",
+    propertyStatus: 'For Sale',
+    status: '',
     features: ["Private Beach", "Private Pool", "Cinema", "Staff Quarters"],
     description: "Ultimate signature villa on the Palm with private beach access.",
     images: [
@@ -155,6 +169,8 @@ export const properties = [
     bathrooms: 4,
     area: 3200,
     unit: "sqft",
+    propertyStatus: 'For Rent',
+    status: '',
     features: ["Burj View", "Concierge", "Gym", "Pool"],
     description: "High-floor luxury apartment with Burj Khalifa & Fountain views.",
     images: [

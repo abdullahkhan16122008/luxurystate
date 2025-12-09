@@ -3,12 +3,13 @@
 import { useState, useMemo, useEffect } from "react";
 import PropertyCard from "@/components/PropertyCard";
 import PropertyFilterBar from "@/components/PropertyFilterBar";
-import { properties } from "@/data/properties";
+// import { properties } from "@/data/properties";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton"; // run: npx shadcn@latest add skeleton (optional)
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 
-const ITEMS_PER_PAGE = 9;
+// const ITEMS_PER_PAGE = 9;
 
 export default function PropertiesPage() {
   const [filters, setFilters] = useState({
@@ -18,8 +19,26 @@ export default function PropertiesPage() {
     maxPrice: 100000000,
   });
   const [sort, setSort] = useState("price-low");
+  const [properties, setProperties] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+
+  let fetchProperties = async () => {
+    let api = process.env.NEXT_PUBLIC_API_URL;
+    try {
+      let res = await axios.post(`${api}/api/get/all/properties`, { page });
+      if (res.data.success) {
+        setProperties(res.data.properties)
+        setLoading(false)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    fetchProperties();
+  }, [page])
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 600);
@@ -46,8 +65,8 @@ export default function PropertiesPage() {
     return result;
   }, [filters, sort]);
 
-  const totalPages = Math.ceil(filteredAndSorted.length / ITEMS_PER_PAGE);
-  const paginated = filteredAndSorted.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  // const totalPages = Math.ceil(filteredAndSorted.length / ITEMS_PER_PAGE);
+  // const paginated = filteredAndSorted.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   return (
     <>
@@ -75,33 +94,33 @@ export default function PropertiesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {loading
-              ? Array(9).fill().map((_, i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="h-64 w-full rounded-2xl" />
-                    <Skeleton className="h-8 w-3/4" />
-                    <Skeleton className="h-6 w-1/2" />
-                  </div>
-                ))
-              : paginated.map(property => (
-                  <PropertyCard key={property.id} property={property} />
-                ))}
+            {/* {loading */}
+            {/* ? Array(9).fill().map((_, i) => ( */}
+            {loading && (
+              <div className="space-y-4">
+                <Skeleton className="h-64 w-full rounded-2xl" />
+                <Skeleton className="h-8 w-3/4" />
+                <Skeleton className="h-6 w-1/2" />
+              </div>
+            )}
+            {/* )) */}
+            {/* : paginated.map(property => ( */}
+            {properties.map((property) => (
+              <PropertyCard key={property._id} property={property} />
+            ))}
+            {/* // ))} */}
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-center gap-2">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <Button
-                  key={i + 1}
-                  variant={page === i + 1 ? "default" : "outline"}
-                  onClick={() => setPage(i + 1)}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-            </div>
-          )}
+          <div className="flex justify-center gap-2">
+            <Button
+              // key={i + 1}
+              // variant={page === i + 1 ? "default" : "outline"}
+              onClick={() => setPage(page + 1)}
+            >
+              Show More
+            </Button>
+          </div>
         </div>
       </section>
     </>

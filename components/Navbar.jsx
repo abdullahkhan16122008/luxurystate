@@ -6,10 +6,19 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useProperties } from "@/app/context/PropertiesContext";
+import { useState } from "react";
+import { MobileMenu } from "./MobileMenu";
+import Alert from "./Alert";
 
 export default function Navbar() {
+  let [ isOpen, setIsOpen ] = useState();
   let pathname = usePathname();
+  let handleBurger = () => {
+    setIsOpen(!isOpen)
+  }
   return (
+    <>
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
@@ -26,21 +35,20 @@ export default function Navbar() {
 
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" onClick={() => {
+                handleBurger();
+              }
+              }>
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80">
-              <div className="flex flex-col space-y-6 mt-12 text-lg">
-                <Link href="/" className="hover:text-blue-600">Home</Link>
-                <Link href="/properties" className="hover:text-blue-600">Properties</Link>
-                <Link href="/about" className="hover:text-blue-600">About</Link>
-                <Link href="/contact" className="hover:text-blue-600">Contact</Link>
-              </div>
-            </SheetContent>
           </Sheet>
         </div>
       </div>
+      <Alert />
     </header>
+      <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen}/>
+    </>
+
   );
 }
