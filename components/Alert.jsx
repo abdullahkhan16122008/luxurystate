@@ -85,8 +85,8 @@ const Alert = () => {
 
     let settings = {
         dots: false,
-        infinite: true,
         autoplay: true,
+        infinite: true,
         speed: 500,
         delay: 1000,
         slidesToShow: 1,
