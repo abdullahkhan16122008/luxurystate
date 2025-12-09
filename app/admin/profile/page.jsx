@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 export default function AdminProfile() {
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
+  const [savedPass, setSavedPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
   const handleChange = () => {
@@ -25,8 +26,10 @@ export default function AdminProfile() {
     toast.success("Password changed successfully!");
   };
 
-  // Override password if stored
-  const savedPass = localStorage.getItem("adminPassword") || "luxury2025";
+  useEffect(() => {
+    // Override password if stored
+    setSavedPass(localStorage.getItem("adminPassword") || "luxury2025")
+  }, [])
 
   return (
     <AdminLayout>

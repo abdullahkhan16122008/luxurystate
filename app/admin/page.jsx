@@ -6,6 +6,7 @@ import { Building2, DollarSign, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 import AdminLayout from "@/components/AdminLayout";
 import { useProperties } from "../context/PropertiesContext";
+import { useEffect } from "react";
 
 const salesData = [
   { month: "Jan", sales: 120000000 },
@@ -24,8 +25,11 @@ const salesData = [
 
 export default function AdminDashboard() {
   const [properties] = useProperties();
-  const leads = JSON.parse(localStorage.getItem("luxuryLeads") || "[]");
-
+  let [ leads, setLeads ] = useState([])
+  
+  useEffect(() => {
+    setLeads(JSON.parse(localStorage.getItem("luxuryLeads") || "[]"))
+  }, [])
   const totalSales = salesData.reduce((acc, curr) => acc + curr.sales, 0);
   const totalProperties = properties.length;
   const avgPrice = properties.length ? Math.round(properties.reduce((acc, p) => acc +p.price, 0) / properties.length) : 0;
