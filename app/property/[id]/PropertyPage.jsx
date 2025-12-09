@@ -43,7 +43,7 @@ export default function PropertyPage({ params }) {
     }).format(property?.price);
 
     return (
-        <section className="py-12 bg-gray-50 min-h-screen">
+        <section className="py-16 bg-gray-50 min-h-screen">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     {/* Gallery */}

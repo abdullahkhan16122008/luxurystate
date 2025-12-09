@@ -84,7 +84,7 @@ const Alert = () => {
 
 
     let settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         autoplay: true,
         speed: 500,
