@@ -12,7 +12,7 @@ import { useSearchFilters } from "@/app/context/SearchFiltersContext";
 
 
 const locations = ["All Locations", "Palm Jumeirah", "Downtown Dubai", "Dubai Marina", "Jumeirah Beach Residence", "Emirates Hills"];
-const types = ["Any Type", "Villa", "Apartment", "Penthouse", "Townhouse", "Duplex"];
+const types = ["All Types", "Villa", "Apartment", "Penthouse", "Townhouse", "Duplex"];
 
 // Custom Select Component
 function CustomSelect({ options, value, onChange, placeholder, label }) {
@@ -85,7 +85,7 @@ const handleSearch = () => {
     // Context میں فلٹرز سیٹ کر دیں
     setFilters({
       location: location === "All Locations" ? "All Locations" : location,
-      type: type === "Any Type" ? "All Types" : type,
+      type: type === "All Types" ? "All Types" : type,
       minPrice: priceRange[0] > 0 ? priceRange[0].toString() : "",
       maxPrice: priceRange[1] < 50000000 ? priceRange[1].toString() : "",
     });
@@ -120,7 +120,7 @@ const handleSearch = () => {
                 options={types}
                 value={type}
                 onChange={setType}
-                placeholder="Any Type"
+                placeholder="All Types"
                 label="Property Type"
               />
             </div>
