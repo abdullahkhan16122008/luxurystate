@@ -71,9 +71,9 @@ function CustomSelect({ options, value, onChange, placeholder, label }) {
 
 export default function HeroSearch() {
   const router = useRouter();
-  const { setFilters } = useSearchFilters();
-  const [location, setLocation] = useState("");
-  const [type, setType] = useState("");
+  const { setFilters, filters } = useSearchFilters();
+  const [location, setLocation] = useState("All Locations");
+  const [type, setType] = useState("All Types");
   const [priceRange, setPriceRange] = useState([0, 50000000]);
 
   useEffect(() => {
@@ -84,6 +84,7 @@ export default function HeroSearch() {
 const handleSearch = () => {
     // Context میں فلٹرز سیٹ کر دیں
     setFilters({
+      ...filters,
       location: location === "All Locations" ? "All Locations" : location,
       type: type === "All Types" ? "All Types" : type,
       minPrice: priceRange[0] > 0 ? priceRange[0].toString() : "",

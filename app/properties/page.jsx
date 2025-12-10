@@ -65,7 +65,7 @@ export default function PropertiesPage() {
 
     if (filters.location !== "All Locations") result = result.filter(p => p.location === filters.location);
     if (filters.type !== "All Types") result = result.filter(p => p.type === filters.type);
-    if (filters.bedrooms !== "Any") result = result.filter(p => p.bedrooms >= Number(filters.bedrooms[0]));
+    if (filters.bedrooms !== "Any") result = result.filter(p => p.bedrooms >= Number(filters.bedrooms));
     if (filters.minPrice !== "") {
       result = result.filter(p => p.price >= Number(filters.minPrice));
     }
