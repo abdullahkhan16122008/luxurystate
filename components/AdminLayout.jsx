@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Home, Building2, Users, User, LogOut, Menu, X, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
+import axios from "axios";
+import { toast } from "sonner";
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: Home, active: 'admin' },
@@ -18,6 +20,69 @@ const navigation = [
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);        // نیا state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);  // نیا state
+
+  let router = useRouter();
+
+  let api = process.env.NEXT_PUBLIC_API_URL;
+
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const response = await axios.post(
+          `${api}/api/verify/token`,
+          {}, // اگر body کی ضرورت نہیں تو خالی بھیج سکتے ہیں
+          { withCredentials: true } // بہت ضروری: cookies بھیجیں
+        );
+
+        if (response.data.success) {
+          setIsAuthenticated(true);
+        } else {
+          router.push("/admin/login");
+        }
+      } catch (err) {
+        console.log("Verification failed:", err);
+        router.push("/admin/login"); // کسی بھی error پر login پر بھیجیں
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyUser();
+  }, [router, api]);
+
+  let handleLogout = async () => {
+    try {
+      let res = await axios.post(`${api}/api/logout/user`);
+      if(res.data.success) {
+        toast.success(res.data.message)
+        router.push('/admin/login')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  // اگر loading ہے تو loader دکھائیں
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Verifying access...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // اگر authenticated نہیں تو کچھ نہ دکھائیں (redirect ہو چکا ہوگا)
+  if (!isAuthenticated) {
+    return null; // یا ایک چھوٹا سا message
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -32,26 +97,24 @@ export default function AdminLayout({ children }) {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-blue-700/50 ${
-                  isActive ? "bg-blue-600 text-white shadow-md" : "hover:text-blue-200"
-                }`}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-blue-700/50 ${isActive ? "bg-blue-600 text-white shadow-md" : "hover:text-blue-200"
+                  }`}
               >
                 <Icon className="w-5 h-5" />
                 <span className="font-medium">{item.name}</span>
               </Link>
             );
           })}
-        </nav>
         <Button
           variant="ghost"
-          className="text-white hover:bg-blue-700/50 hover:text-blue-200 mt-auto rounded-xl"
+          className="text-white ml-1.5 hover:bg-blue-700/50 hover:text-blue-200 rounded-xl"
           onClick={() => {
-            localStorage.removeItem("adminLoggedIn");
-            window.location.href = "/admin";
+            handleLogout();
           }}
         >
           <LogOut className="mr-2 h-4 w-4" /> Logout
         </Button>
+        </nav>
       </aside>
 
       {/* Mobile Hamburger Menu */}
@@ -78,9 +141,8 @@ export default function AdminLayout({ children }) {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-blue-700/50 ${
-                      isActive ? "bg-blue-600 text-white shadow-md" : "hover:text-blue-200"
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 hover:bg-blue-700/50 ${isActive ? "bg-blue-600 text-white shadow-md" : "hover:text-blue-200"
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
@@ -92,8 +154,7 @@ export default function AdminLayout({ children }) {
               variant="ghost"
               className="text-white hover:bg-blue-700/50 hover:text-blue-200 w-full mt-auto rounded-xl"
               onClick={() => {
-                localStorage.removeItem("adminLoggedIn");
-                window.location.href = "/admin";
+                handleLogout();
               }}
             >
               <LogOut className="mr-2 h-4 w-4" /> Logout

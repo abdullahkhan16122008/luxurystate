@@ -7,6 +7,7 @@ const PropertiesContext = createContext();
 
 export function PropertiesProvider({ children }) {
   const [properties, setProperties] = useState([]);
+  const [user, setUser] = useState('loggedout');
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function PropertiesProvider({ children }) {
   };
 
   return (
-    <PropertiesContext.Provider value={[properties, updateProperties, isOpen, setIsOpen]}>
+    <PropertiesContext.Provider value={[properties, updateProperties, isOpen, setIsOpen, user, setUser]}>
       {children}
     </PropertiesContext.Provider>
   );

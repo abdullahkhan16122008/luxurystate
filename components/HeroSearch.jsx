@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { Search, ChevronDown, Check } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { useSearchFilters } from "@/app/context/SearchFiltersContext";
 
 
 const locations = ["All Locations", "Palm Jumeirah", "Downtown Dubai", "Dubai Marina", "Jumeirah Beach Residence", "Emirates Hills"];
@@ -70,6 +71,7 @@ function CustomSelect({ options, value, onChange, placeholder, label }) {
 
 export default function HeroSearch() {
   const router = useRouter();
+  const { setFilters } = useSearchFilters();
   const [location, setLocation] = useState("");
   const [type, setType] = useState("");
   const [priceRange, setPriceRange] = useState([0, 50000000]);
@@ -79,14 +81,17 @@ export default function HeroSearch() {
   }, [])
   
 
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (location && location !== "All Locations") params.set("location", location);
-    if (type && type !== "Any Type") params.set("type", type);
-    params.set("minPrice", priceRange[0].toString());
-    params.set("maxPrice", priceRange[1].toString());
+const handleSearch = () => {
+    // Context میں فلٹرز سیٹ کر دیں
+    setFilters({
+      location: location === "All Locations" ? "All Locations" : location,
+      type: type === "Any Type" ? "All Types" : type,
+      minPrice: priceRange[0] > 0 ? priceRange[0].toString() : "",
+      maxPrice: priceRange[1] < 50000000 ? priceRange[1].toString() : "",
+    });
 
-    router.push(`/properties?${params.toString()}`);
+    // صرف page navigate کریں، کوئی query params نہیں
+    router.push("/properties");
   };
 
   return (

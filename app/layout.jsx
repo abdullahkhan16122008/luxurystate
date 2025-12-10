@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PropertiesProvider } from "./context/PropertiesContext";
 import { MobileMenu } from "@/components/MobileMenu"
+import { SearchFiltersProvider } from "./context/SearchFiltersContext";
 
 export const metadata = {
   title: "LuxuryEstate - Dubai Luxury Properties",
@@ -23,11 +24,13 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       >
         <PropertiesProvider>
+          <SearchFiltersProvider>
           <Navbar />
           {/* <MobileMenu /> */}
           <main className="flex-1">{children}</main>
           <Footer />
           <Toaster />
+          </SearchFiltersProvider>
         </PropertiesProvider>
       </body>
     </html>
