@@ -8,17 +8,17 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname } from 'next/navigation';
 
 function SampleNextArrow(props) {
-  const { style, onClick, currentSlide, slideCount } = props;
-  const isDisabled = currentSlide === slideCount - 1;
+  const { style, onClick } = props;
+  // const isDisabled = currentSlide === slideCount - 1;
   
   return (
     <div
-      className={`absolute right-10 -translate-y-[30px] group max-md:hidden`}
+      className={`absolute right-10 z-[50] -translate-y-[30px] group max-md:hidden`}
       style={{ ...style }}
       onClick={onClick}
     >
       <button
-        disabled={isDisabled}
+        // disabled={isDisabled}
         className={`flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-xl 
           border border-gray-200 transition-all duration-300 hover:scale-110 active:scale-95
           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100
@@ -44,17 +44,17 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { style, onClick, currentSlide } = props;
-  const isDisabled = currentSlide === 0;
+  const { style, onClick } = props;
+  // const isDisabled = currentSlide === 0;
   
   return (
     <div
-      className={`absolute left-10 -translate-y-[6px] group max-md:hidden`}
+      className={`absolute left-10 z-[50] -translate-y-[6px] group max-md:hidden`}
       style={{ ...style }}
       onClick={onClick}
     >
       <button
-        disabled={isDisabled}
+        // disabled={isDisabled}
         className={`flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-xl 
           border border-gray-200 transition-all duration-300 hover:scale-110 active:scale-95
           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100

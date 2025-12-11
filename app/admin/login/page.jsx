@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
 
       if (data.success) {
         // Successful login
-        router.push("/admin"); // اپنا dashboard path یہاں تبدیل کریں
+        router.push("/admin");
         toast.success('Logged In Successfully')
       } else {
         setError(data.message || "Invalid username or password");

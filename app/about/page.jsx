@@ -11,14 +11,14 @@ export default function AboutPage() {
       <section className="relative h-screen flex items-center justify-center bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=2000&q=80')"}}>
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 text-center text-white px-6">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Dubai's Most Trusted<br/>Luxury Real Estate Agency</h1>
-          <p className="text-xl md:text-2xl max-w-4xl mx-auto">Over AED 5.2 Billion in sales | 500+ happy families | 12 years of excellence</p>
+          <h1 className="text-3xl md:text-7xl font-bold mb-6">Dubai's Most Trusted<br/>Luxury Real Estate Agency</h1>
+          <p className="text-sm md:text-2xl max-w-4xl mx-auto">Over AED 5.2 Billion in sales | 500+ happy families | 12 years of excellence</p>
         </div>
       </section>
 
       {/* Stats */}
       <section className="py-20 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+        <div className="container mx-auto px-4 grid sm:grid-cols-2 grid-cols-1 md:grid-cols-4 gap-10 text-center">
           <div>
             <div className="text-5xl font-bold">AED 5.2B+</div>
             <p className="text-blue-100 mt-2">Total Sales Volume</p>
@@ -42,16 +42,16 @@ export default function AboutPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 max-w-6xl">
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-blue-600">Our Mission</h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600">Our Mission</h2>
+            <p className="sm:text-xl text-sm text-gray-600 leading-relaxed">
               To deliver extraordinary real estate experiences by combining unmatched market knowledge, 
               discretion, and personalized service — helping our clients find not just a property, 
               but their ultimate lifestyle in Dubai.
             </p>
           </div>
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-blue-600">Our Vision</h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-600">Our Vision</h2>
+            <p className="text-sm sm:text-xl text-gray-600 leading-relaxed">
               To remain Dubai's most respected and referred luxury real estate brand, 
               setting the global standard for integrity, innovation, and client satisfaction.
             </p>
@@ -97,7 +97,7 @@ export default function AboutPage() {
           <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
             Multilingual specialists with over 100+ years of combined experience in Dubai luxury real estate
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          <div className="grid sm:grid-cols-2 grid-cols-1 md:grid-cols-4 gap-10">
             {["Sarah Al Maktoum", "James Williams", "Olga Petrova", "Ahmed Khan"].map((name, i) => (
               <div key={i} className="space-y-4">
                 <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-blue-600">

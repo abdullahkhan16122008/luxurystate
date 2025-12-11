@@ -33,8 +33,8 @@ export default function AdminLayout({ children }) {
       try {
         const response = await axios.post(
           `${api}/api/verify/token`,
-          {}, // اگر body کی ضرورت نہیں تو خالی بھیج سکتے ہیں
-          { withCredentials: true } // بہت ضروری: cookies بھیجیں
+          {},
+          { withCredentials: true } 
         );
 
         if (response.data.success) {
@@ -44,7 +44,7 @@ export default function AdminLayout({ children }) {
         }
       } catch (err) {
         console.log("Verification failed:", err);
-        router.push("/admin/login"); // کسی بھی error پر login پر بھیجیں
+        router.push("/admin/login");
       } finally {
         setIsLoading(false);
       }

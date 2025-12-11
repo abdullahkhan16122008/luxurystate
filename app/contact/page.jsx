@@ -56,11 +56,11 @@ const handleSubmit = async (e) => {
   return (
     <>
       {/* Hero */}
-      <section className="relative py-32 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1556742111-a301076d9d41?w=2000&q=80')"}}>
+      <section className="relative py-32 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=2000&q=80')"}}>
         <div className="absolute inset-0 bg-black/70"></div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Get In Touch</h1>
-          <p className="text-2xl">Our team is available 24/7 via call or WhatsApp</p>
+          <h1 className="text-3xl md:text-7xl font-bold mb-6">Get In Touch</h1>
+          <p className="md:text-2xl text-sm sm:text-xl">Our team is available 24/7 via call or WhatsApp</p>
         </div>
       </section>
 
@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
 
             {/* Contact Form */}
             <div className="bg-white rounded-3xl shadow-2xl p-10">
-              <h2 className="text-4xl font-bold mb-8">Send Us a Message</h2>
+              <h2 className="sm:text-4xl text-xl font-bold mb-8">Send Us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Label htmlFor="name">Full Name</Label>
@@ -132,7 +132,7 @@ const handleSubmit = async (e) => {
             {/* Contact Info + Map */}
             <div className="space-y-10">
               <div>
-                <h2 className="text-4xl font-bold mb-10">Contact Information</h2>
+                <h2 className="sm:text-4xl text-xl font-bold mb-10">Contact Information</h2>
                 <div className="space-y-8">
                   <div className="flex items-center gap-5">
                     <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -140,7 +140,7 @@ const handleSubmit = async (e) => {
                     </div>
                     <div>
                       <p className="text-gray-600">Call or WhatsApp</p>
-                      <p className="text-2xl font-bold">+971 4 123 4567</p>
+                      <p className="sm:text-2xl text-sm font-bold">+971 4 123 4567</p>
                     </div>
                   </div>
 
@@ -150,7 +150,7 @@ const handleSubmit = async (e) => {
                     </div>
                     <div>
                       <p className="text-gray-600">WhatsApp Direct</p>
-                      <a href="https://wa.me/971501234567" className="text-2xl font-bold text-green-600 hover:underline">Click to Chat</a>
+                      <a href="https://wa.me/923323604309" className="sm:text-2xl text-sm font-bold text-green-600 hover:underline" target="_blank">Click to Chat</a>
                     </div>
                   </div>
 
@@ -160,7 +160,7 @@ const handleSubmit = async (e) => {
                     </div>
                     <div>
                       <p className="text-gray-600">Email Us</p>
-                      <p className="text-2xl font-bold">info@luxuryestate.ae</p>
+                      <p className="sm:text-2xl text-sm font-bold">abdullahkhan16122008@gmail.com</p>
                     </div>
                   </div>
 
@@ -170,7 +170,7 @@ const handleSubmit = async (e) => {
                     </div>
                     <div>
                       <p className="text-gray-600">Visit Our Office</p>
-                      <p className="text-xl font-bold">Office 3201, Burj Al Salam Tower<br/>Sheikh Zayed Road, Dubai</p>
+                      <p className="sm:text-xl text-sm font-bold">Office 3201, Burj Al Salam Tower<br/>Sheikh Zayed Road, Dubai</p>
                     </div>
                   </div>
                 </div>
