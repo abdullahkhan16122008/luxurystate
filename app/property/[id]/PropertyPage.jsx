@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { use } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 
 export default function PropertyPage({ params }) {
@@ -82,8 +83,10 @@ export default function PropertyPage({ params }) {
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-8">
                             <Button size="lg" className="flex-1 max-sm:py-4 hover:bg-gray-800 active:bg-gray-800">
+                                <Link className="flex" href={'/contact'}>
                                 <Phone className="mr-2 h-5 w-5" />
                                 Call +971 50 123 4567
+                                </Link>
                             </Button>
                             <Button size="lg" variant="secondary" className="flex-1 py-4 text-white bg-green-500 hover:bg-green-600 active:bg-green-600" asChild>
                                 <a href={`https://wa.me/923323604309?text=I'm%20interested%20in%20${encodeURIComponent(property.title)}%20in%20${encodeURIComponent(property.location)}`} target="_blank">
