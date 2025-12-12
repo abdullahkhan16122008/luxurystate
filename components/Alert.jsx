@@ -99,17 +99,17 @@ const Alert = () => {
     let alerts = [
         {
             _id: 1,
-            text: 'Best Price Properties at Best Location'
+            text: 'Best Price Properties at Best Location 💸'
         },
         {
             _id: 2,
-            text: '24/7 Customer Support'
+            text: '24/7 Customer Support ✅'
         }
     ];
 
     return (
         <>
-            <section className={`bg-gray-900 ${pathname.startsWith("/admin") ? "hidden" : ""} text-white py-4 absolute z-60 right-0 left-0 text-center`}>
+            <section className={`bg-gray-800 ${pathname.startsWith("/admin") ? "hidden" : ""} text-white py-4 absolute z-60 right-0 left-0 text-center`}>
                 <Slider {...settings}>
                     {alerts.map((alert) => (
                         <div key={alert._id} className='font-medium'>{alert.text}</div>

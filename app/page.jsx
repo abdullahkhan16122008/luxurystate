@@ -54,8 +54,8 @@ export default function Home() {
         </div>
       </section>
 
-      <FeaturedProperties properties={properties} title={'Featured Properties'} subTitle={`Handpicked luxury homes in Dubai's most exclusive locations`} />
-      <FeaturedProperties properties={hot} title={'Hot Properties'} subTitle={`Handpicked luxury homes in Dubai's most exclusive locations`} />
+      <FeaturedProperties properties={properties} title={'Featured Properties 🏆'} subTitle={`Handpicked luxury homes in Dubai's most exclusive locations`} />
+      <FeaturedProperties properties={hot} title={'Hot Properties 🔥'} subTitle={`Handpicked luxury homes in Dubai's most exclusive locations`} />
       <WhyChooseUs />
       {/* <Testimonials /> */}
     </>

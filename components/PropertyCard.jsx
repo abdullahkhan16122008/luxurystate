@@ -21,7 +21,9 @@ export default function PropertyCard({ property, index }) {
   }, [])
 
   return (
-    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3" data-aos='zoom-in' data-aos-delay={`${index * 100}`} >
+    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3" >
+      <div className={`absolute text-white z-1 rounded-r-[8px] bg-yellow-500 px-4 py-1 ${ property.status === "" ? 'hidden' : "" } ${ property.status === (undefined || "" || null || "undefined") ? 'hidden' : "" }`}>{property.status}</div>
+
       <div className="relative h-64 md:h-90 -translate-y-6 overflow-hidden">
         <Image
           src={property.images[0]}
@@ -36,7 +38,8 @@ export default function PropertyCard({ property, index }) {
         </div>
       </div>
 
-      <CardContent className="p-6 -translate-y-6">
+      <CardContent className="p-6 mt-2 -translate-y-6">
+        <h3 className={`bg-red-700 text-white px-4 py-1 -translate-y-10 rounded-r-[8px] absolute mb-2 line-clamp-1 ${ property.status === "" ? 'hidden' : "" } ${ property.status === (undefined || "" || null || "undefined") ? 'hidden' : "" }`}>{property.propertyStatus}</h3>
         <h3 className="text-xl font-semibold mb-2 line-clamp-1">{property.title}</h3>
         <p className="text-muted-foreground flex items-center gap-1 mb-4">
           <MapPin className="w-4 h-4" />
@@ -65,6 +68,7 @@ export default function PropertyCard({ property, index }) {
           </Link>
         </Button>
       </CardContent>
+
     </Card>
   );
 }

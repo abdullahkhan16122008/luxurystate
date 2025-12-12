@@ -288,7 +288,7 @@ export default function PropertiesPage() {
 
               {/* Load More */}
               <div className="flex justify-center mt-16">
-                <Button onClick={handleLoadMore} size="lg" className="bg-blue-600 hover:bg-blue-700">
+                <Button onClick={handleLoadMore} size="lg" className="bg-gray-800 hover:bg-gray-700">
                   Load More
                 </Button>
               </div>
