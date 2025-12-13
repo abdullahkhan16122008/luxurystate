@@ -12,6 +12,7 @@ export function SearchFiltersProvider({ children }) {
         bedrooms: "Any",
         minPrice: "",
         maxPrice: 100000000,
+        propertyStatus: "All Status",   // ← Naya filter add kiya
     });
 
     return (

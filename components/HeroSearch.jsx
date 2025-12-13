@@ -96,6 +96,12 @@ const handleSearch = () => {
   };
 
   return (
+    <>
+    <div className="flex z-30 mb-3 gap-3 flex-wrap justify-center justify-self-center">
+      <button className={`${ filters.propertyStatus === 'For Sale' ? 'bg-gray-800' : 'bg-white/60 text-gray-700 backdrop-blur-[2px]'} px-6 py-1 font-bold text-[20px] rounded-[8px]`} onClick={e => setFilters({...filters, propertyStatus: "For Sale"})} >Buy</button>
+      <button className={`${ filters.propertyStatus === 'For Rent' ? 'bg-gray-800' : 'bg-white/60 text-gray-700 backdrop-blur-[2px]'} px-6 py-1 font-bold text-[20px] rounded-[8px]`} onClick={e => setFilters({...filters, propertyStatus: "For Rent"})} >Rent</button>
+      <button className={`${ filters.propertyStatus === 'All Status' ? 'bg-gray-800' : 'bg-white/60 text-gray-700 backdrop-blur-[2px]'} px-6 py-1 font-bold text-[20px] rounded-[8px]`} onClick={e => setFilters({...filters, propertyStatus: "All Status"})} >Both</button>
+    </div>
     <div className="bg-black/30 backdrop-blur-[2px] rounded-2xl p-6 sm:p-8 max-w-5xl mx-auto relative z-10" style={{boxShadow: '0px 0px 10px 0px gray'}} data-aos="fade-right">
       {/* Flex container - vertical on mobile, horizontal on desktop */}
       <div className="flex flex-col lg:flex-row lg:items-end gap-6">
@@ -168,5 +174,6 @@ const handleSearch = () => {
       </div>
       
     </div>
+    </>
   );
 }

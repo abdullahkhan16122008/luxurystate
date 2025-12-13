@@ -52,8 +52,8 @@ export function MobileMenu({ isOpen, setIsOpen }) {
 
                 {/* Decorative Background */}
                 <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-pulse" />
-                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-100 rounded-full opacity-20 animate-pulse delay-300" />
+                    <div className="absolute -top-24 -right-24 blur-md w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-pulse" />
+                    <div className="absolute -bottom-24 -left-24 blur-md w-64 h-64 bg-purple-100 rounded-full opacity-20 animate-pulse delay-300" />
                 </div>
 
                 {/* Menu Content */}

@@ -72,6 +72,9 @@ export default function PropertiesPage() {
     if (filters.maxPrice !== "") {
       result = result.filter(p => p.price <= Number(filters.maxPrice));
     }
+    if (filters.propertyStatus !== "All Status") {
+      result = result.filter(p => p.propertyStatus === filters.propertyStatus);
+    }
 
     result.sort((a, b) => {
       if (sort === "price-low") return a.price - b.price;
@@ -87,8 +90,9 @@ export default function PropertiesPage() {
   const dubaiLocations = ["All Locations", "Palm Jumeirah", "Downtown Dubai", "Dubai Marina", "Jumeirah Beach Residence", "Emirates Hills"];;
   const propertyTypes = ["All Types", "Villa", "Apartment", "Penthouse", "Townhouse", "Duplex"];
   const bedroomOptions = ["Any", "1+", "2+", "3+", "4+", "5+", "6+"];
+  const statusOptions = ["All Status", "For Sale", "For Rent"];
 
-  const FilterSidebar =  memo(() => {
+  const FilterSidebar = memo(() => {
     const priceRange = useMemo(() => {
       const min = filters.minPrice ? Number(filters.minPrice) : 0;
       const max = filters.maxPrice ? Number(filters.maxPrice) : 100000000;
@@ -150,6 +154,26 @@ export default function PropertiesPage() {
             <SelectContent>
               {bedroomOptions.map(b => (
                 <SelectItem key={b} value={b}>{b === "Any" ? "Any Bedrooms" : b}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Property Status */}
+        <div>
+          <h3 className="text-lg font-semibold mb-4">Property Status</h3>
+          <Select
+            value={filters.propertyStatus}
+            onValueChange={(v) => setFilters(prev => ({ ...prev, propertyStatus: v }))}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {statusOptions.map(status => (
+                <SelectItem key={status} value={status}>
+                  {status === "All Status" ? "For Sale & Rent" : status}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -229,7 +253,7 @@ export default function PropertiesPage() {
       <section className="py-16 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl md:text-6xl font-bold text-center mb-4">Luxury Properties in Dubai</h1>
-          <p className="md:text-xl text-center text-muted-foreground mb-12">{ filteredAndSorted.length === 0 ? `0 Properties Found` : `Discover ${filteredAndSorted.length} exclusive listings`}</p>
+          <p className="md:text-xl text-center text-muted-foreground mb-12">{filteredAndSorted.length === 0 ? `0 Properties Found` : `Discover ${filteredAndSorted.length} exclusive listings`}</p>
 
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Desktop Left Sidebar Filters */}
@@ -248,7 +272,7 @@ export default function PropertiesPage() {
                 >
                   <Filter className="h-7 w-7" />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-7 w-7 flex items-center justify-center">
-                    {Object.values(filters).filter(v => v && v !== "All Locations" && v !== "All Types" && v !== "Any" && v !== 100000000).length}
+                    {Object.values(filters).filter(v => v && v !== "All Locations" && v !== "All Types" && v !== "Any" && v !== "All Status" && v !== 100000000).length}
                   </span>
                 </button>
               </div>
@@ -309,11 +333,11 @@ export default function PropertiesPage() {
                 <div className="p-8 overflow-y-auto">
                   <FilterSidebar />
                 </div>
-                <div className="p-6 border-t bg-gray-50">
+                {/* <div className="p-6 border-t bg-gray-50">
                   <button onClick={() => setMobileOpen(false)} className="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl">
                     Apply Filters
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           ) : null}
